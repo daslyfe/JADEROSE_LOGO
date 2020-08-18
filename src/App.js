@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { shuffle } from "lodash";
+import './css/logo.css';
 
-function App() {
+export const App = () => {
+  const initialColors = ["#FF008C", "#D309E1", "#D309E2"];
+  const [colors, setColors] = useState(initialColors);
+  const spring = {
+    type: "spring",
+    damping: 100,
+    stiffness: 300
+  };
+
+  useEffect(() => {
+    setTimeout(() => setColors(shuffle(colors)), 1600);
+  }, [colors]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="logo"><p style={{fontSize: 60, color: colors[0]}}>JADE</p>
+      {colors.map(background => (
+        <motion.div
+          key={background}
+          layoutTransition={spring}
+          style={{ background }}
+          className="logo-block"
+        />
+      ))} 
+      <p style={{fontSize: 60, color: colors[2]}}>ROSE</p>
     </div>
   );
-}
+};
+
+
+
 
 export default App;
